@@ -142,7 +142,11 @@ final class JWTTools
      */
     public function decodeToken(string $token): stdClass
     {
-        return JWT::decode($token, $this->secretKey, [$this->algorithm]);
+        try {
+	    return JWT::decode($token, $this->secretKey, [$this->algorithm]);
+	} catch (\Exception $e) {
+	    throw new \yii\web\UnauthorizedHttpException($e->getMessage());
+	}
     }
 
     /**

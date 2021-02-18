@@ -30,7 +30,8 @@ class JWTSignatureBehavior extends ActionFilter
             throw new UnauthorizedHttpException('Your request was made without an authorization token.');
         }
 
-        $token = explode(' ', $authorizationHeader)[1];
+        $headerToken = explode(' ', $authorizationHeader);
+        $token = end($headerToken);
 
         $jwtTools = JWTTools::build($this->secretKey);
 
